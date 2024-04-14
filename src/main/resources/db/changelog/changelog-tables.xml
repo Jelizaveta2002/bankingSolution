@@ -4,23 +4,112 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet  id="1-User table"  author="Jelizaveta Vološina">
-        <createTable  tableName="cuser">
-            <column  name="cuser_id"  type="int"  autoIncrement="true">
-                <constraints  primaryKey="true" primaryKeyName="pk_cuser"  nullable="false"/>
+    <changeSet  id="1-Customer table"  author="Jelizaveta Vološina">
+        <createTable  tableName="customer">
+            <column  name="customer_id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true" primaryKeyName="pk_customer"  nullable="false"/>
             </column>
-            <column  name="cuser_name"  type="varchar(63)">
+            <column  name="customer_name"  type="varchar(63)">
                 <constraints  nullable="false"/>
             </column>
-            <column  name="cuser_surname"  type="varchar(50)">
+            <column  name="customer_surname"  type="varchar(50)">
                 <constraints  nullable="false"/>i
             </column>
-            <column  name="cuser_email"  type="varchar(255)">
-                <constraints  nullable="false" unique="true" uniqueConstraintName="ak_cuser_email"/>
-            </column>
-            <column  name="cuser_password"  type="varchar(60)">
-                <constraints  nullable="false"/>
+            <column  name="customer_email"  type="varchar(255)">
+                <constraints  nullable="false" unique="true" uniqueConstraintName="ak_customer_email"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet id="2-Countries table" author="Jelizaveta Vološina">
+        <createTable tableName="countries">
+            <column name="country_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_countries"/>
+            </column>
+            <column name="country_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ak_country_name"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet  id="3-Account table"  author="Jelizaveta Vološina">
+        <createTable  tableName="account">
+            <column  name="account_id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true" primaryKeyName="pk_account"  nullable="false"/>
+            </column>
+            <column name="customer_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="country_id"  type="int">
+                <constraints  nullable="false"/>i
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_account_customer"
+                                 baseTableName="account"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="customer"
+                                 referencedColumnNames="customer_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addForeignKeyConstraint constraintName="fk_account_country"
+                                 baseTableName="account"
+                                 baseColumnNames="country_id"
+                                 referencedTableName="countries"
+                                 referencedColumnNames="country_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+    <changeSet  id="4-Balance table"  author="Jelizaveta Vološina">
+        <createTable  tableName="balances">
+            <column  name="balance_id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true" primaryKeyName="pk_balance"  nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="amount"  type="DECIMAL(15,2)">
+                <constraints  nullable="false"/>i
+            </column>
+            <column  name="currency"  type="varchar(3)">
+                <constraints  nullable="false"/>i
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_balance_account"
+                                 baseTableName="balances"
+                                 baseColumnNames="account_id"
+                                 referencedTableName="account"
+                                 referencedColumnNames="account_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+        <addUniqueConstraint columnNames="account_id, currency"
+                             tableName="balances"
+                             constraintName="ak_account_id_currency"/>
+    </changeSet>
+    <changeSet  id="5-Transaction table"  author="Jelizaveta Vološina">
+        <createTable  tableName="transactions">
+            <column  name="transaction_id"  type="int"  autoIncrement="true">
+                <constraints  primaryKey="true" primaryKeyName="pk_transaction"  nullable="false"/>
+            </column>
+            <column name="account_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="amount"  type="DECIMAL(15,2)">
+                <constraints  nullable="false"/>i
+            </column>
+            <column  name="currency"  type="varchar(3)">
+                <constraints  nullable="false"/>i
+            </column>
+            <column  name="direction"  type="varchar(3)">
+                <constraints  nullable="false"/>i
+            </column>
+            <column  name="description"  type="varchar(255)">
+                <constraints  nullable="false"/>i
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_transactions_account"
+                                 baseTableName="transactions"
+                                 baseColumnNames="account_id"
+                                 referencedTableName="account"
+                                 referencedColumnNames="account_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
     </changeSet>
 </databaseChangeLog>

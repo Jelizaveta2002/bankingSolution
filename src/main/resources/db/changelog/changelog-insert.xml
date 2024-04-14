@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet  id="1-Customer table insert data"  author="Jelizaveta Vološina">
+        <insert tableName="customer">
+            <column name="customer_name" value="Kadri"/>
+            <column name="customer_surname" value="Tamm"/>
+            <column name="customer_email" value="kadri.tamm@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Anna"/>
+            <column name="customer_surname" value="Tamm"/>
+            <column name="customer_email" value="anna.tamm@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Tanel"/>
+            <column name="customer_surname" value="Lipp"/>
+            <column name="customer_email" value="tanel.lipp@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Robert"/>
+            <column name="customer_surname" value="Kuusk"/>
+            <column name="customer_email" value="robert.k@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Alber"/>
+            <column name="customer_surname" value="Mere"/>
+            <column name="customer_email" value="mere.a@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Andrus"/>
+            <column name="customer_surname" value="Rebane"/>
+            <column name="customer_email" value="anrus.r@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Nele"/>
+            <column name="customer_surname" value="Kask"/>
+            <column name="customer_email" value="Kask.nele@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Liia"/>
+            <column name="customer_surname" value="Farber"/>
+            <column name="customer_email" value="Farber.liia@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Maia"/>
+            <column name="customer_surname" value="Luik"/>
+            <column name="customer_email" value="maia.luik@gmail.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="customer_name" value="Timo"/>
+            <column name="customer_surname" value="Tompson"/>
+            <column name="customer_email" value="timo.t@gmail.com"/>
+        </insert>
+    </changeSet>
+    <changeSet  id="2-Country table insert data"  author="Jelizaveta Vološina">
+        <insert tableName="countries">
+            <column name="country_name" value="Estonia"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Germany"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="France"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Sweden"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="United Kingdom"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="United States"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Italy"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Spain"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Portugal"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Greece"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Scotland"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="country_name" value="Wales"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
