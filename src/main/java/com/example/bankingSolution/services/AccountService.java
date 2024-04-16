@@ -22,9 +22,12 @@ import java.util.Optional;
 public class AccountService {
     private final AccountDao accountDao;
     private final BalanceDao balanceDao;
+    private final ValidatorService validatorService;
 
     public AccountDto createAccount(AccountDtoRequest account) throws ApplicationException {
-        validateCurrencies(account.getCurrencies());
+        for (String currencyStr : account.getCurrencies()) {
+            validatorService.validateCurrency(currencyStr);
+        }
         try {
             accountDao.createAccount(account);
             log.info(account.getId().toString());
@@ -38,16 +41,6 @@ public class AccountService {
             return getAccountById(account.getId());
         } catch (Exception e) {
             throw new ApplicationException("Unexpected error occurred while creating a new account");
-        }
-    }
-
-    private void validateCurrencies(List<String> currencies) throws ApplicationException {
-        for (String currencyStr : currencies) {
-            try {
-                CurrencyEnum currencyEnum = CurrencyEnum.valueOf(currencyStr.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                throw new ApplicationException("Invalid currency: " + currencyStr);
-            }
         }
     }
 

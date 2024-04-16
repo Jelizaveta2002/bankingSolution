@@ -13,4 +13,19 @@
         FROM balances b
         WHERE b.account_id = #{id}
     </select>
+
+    <select id="getBalanceByIdAndCurrency" resultType="com.example.bankingSolution.dto.BalanceDtoRequest">
+        SELECT
+            b.balance_id AS id,
+            b.amount AS amount,
+            b.currency AS currency
+        FROM balances b
+        WHERE b.account_id = #{id} AND b.currency = #{currency}
+    </select>
+
+    <update id="updateBalanceAmount">
+        UPDATE balances
+        SET amount = #{amount}
+        WHERE balance_id = #{id};
+    </update>
 </mapper>

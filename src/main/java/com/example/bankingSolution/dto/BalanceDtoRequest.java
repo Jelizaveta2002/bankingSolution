@@ -11,4 +11,5 @@ public class BalanceDtoRequest {
     private Long accountId;
     private BigDecimal amount;
     private CurrencyEnum currency;
+
 }
