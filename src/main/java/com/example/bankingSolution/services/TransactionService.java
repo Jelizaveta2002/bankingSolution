@@ -6,10 +6,12 @@ import com.example.bankingSolution.dao.TransactionDao;
 import com.example.bankingSolution.dto.AccountDto;
 import com.example.bankingSolution.dto.BalanceDto;
 import com.example.bankingSolution.dto.TransactionDto;
+import com.example.bankingSolution.dto.TransactionResponseDto;
 import com.example.bankingSolution.exceptions.ApplicationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -27,18 +29,25 @@ public class TransactionService {
         BalanceDto balanceDto = balanceDao.getBalanceByIdAndCurrency(account.getId(), transactionDto.getCurrency());
         if (balanceDto != null) {
             validatorService.validateAmount(DirectionEnum.valueOf(transactionDto.getDirection()), transactionDto.getAmount(), balanceDto.getAmount());
-            transactionDao.createTransaction(transactionDto);
             if (Objects.equals(transactionDto.getDirection(), "IN")) {
                 balanceDao.updateBalanceAmount(balanceDto.getId(), balanceDto.getAmount().add(transactionDto.getAmount()));
             } else {
                 balanceDao.updateBalanceAmount(balanceDto.getId(), balanceDto.getAmount().subtract(transactionDto.getAmount()));
             }
-            TransactionDto transaction = transactionDao.getTransactionById(transactionDto.getId());
-            BalanceDto transactionBalance = balanceDao.getBalanceByIdAndCurrency(transaction.getAccountId(), transaction.getCurrency());
-            transaction.setBalanceAfterTransaction(transactionBalance);
-            return transaction;
+            BalanceDto transactionBalance = balanceDao.getBalanceByIdAndCurrency(transactionDto.getAccountId(), transactionDto.getCurrency());
+            transactionDto.setBalanceAfterTransaction(transactionBalance);
+            transactionDao.createTransaction(transactionDto);
+            return transactionDto;
         } else {
             throw new ApplicationException("Account with ID " + transactionDto.getAccountId() + " does not have balance with currency " + transactionDto.getCurrency());
+        }
+    }
+
+    public List<TransactionResponseDto> getAllTransactionsByAccountId(Long id) {
+        try{
+            return transactionDao.getAllTransactionsByAccountId(id);
+        } catch (Exception e) {
+            throw new ApplicationException("No account with ID: " + id);
         }
     }
 

@@ -17,4 +17,16 @@
         FROM transactions t
         WHERE t.transaction_id = #{id}
     </select>
+
+    <select id="getAllTransactionsByAccountId" resultType="com.example.bankingSolution.dto.TransactionResponseDto">
+        SELECT
+            t.transaction_id AS id,
+            t.account_id AS accountId,
+            t.amount AS amount,
+            t.currency AS currency,
+            t.direction AS direction,
+            t.description AS description
+        FROM transactions t
+        WHERE t.account_id = #{accountId}
+    </select>
 </mapper>
