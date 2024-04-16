@@ -5,4 +5,16 @@
         INSERT INTO transactions (account_id, amount, currency, direction, description)
         VALUES (#{accountId}, #{amount}, #{currency}, #{direction}, #{description});
     </insert>
+
+    <select id="getTransactionById" resultType="com.example.bankingSolution.dto.TransactionDto">
+        SELECT
+            t.transaction_id AS id,
+            t.account_id AS accountId,
+            t.amount AS amount,
+            t.currency AS currency,
+            t.direction AS direction,
+            t.description AS description
+        FROM transactions t
+        WHERE t.transaction_id = #{id}
+    </select>
 </mapper>

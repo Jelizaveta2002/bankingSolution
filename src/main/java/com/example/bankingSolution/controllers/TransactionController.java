@@ -14,7 +14,7 @@ public class TransactionController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public void addTransaction(@RequestBody TransactionDto transactionDto) {
-        transactionService.createTransaction(transactionDto);
+    public TransactionDto addTransaction(@RequestBody TransactionDto transactionDto) {
+        return transactionService.createTransaction(transactionDto);
     }
 }

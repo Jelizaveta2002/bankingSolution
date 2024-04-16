@@ -6,7 +6,6 @@ import com.example.bankingSolution.dao.BalanceDao;
 import com.example.bankingSolution.dto.AccountDto;
 import com.example.bankingSolution.dto.AccountDtoRequest;
 import com.example.bankingSolution.dto.BalanceDto;
-import com.example.bankingSolution.dto.BalanceDtoRequest;
 import com.example.bankingSolution.exceptions.ApplicationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,7 @@ public class AccountService {
             accountDao.createAccount(account);
             log.info(account.getId().toString());
             for (String currency : account.getCurrencies()) {
-                BalanceDtoRequest balanceDto = new BalanceDtoRequest();
+                BalanceDto balanceDto = new BalanceDto();
                 balanceDto.setAccountId(account.getId());
                 balanceDto.setCurrency(CurrencyEnum.valueOf(currency.toUpperCase()));
                 balanceDto.setAmount(BigDecimal.valueOf(0));

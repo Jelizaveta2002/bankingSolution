@@ -14,7 +14,7 @@
         WHERE b.account_id = #{id}
     </select>
 
-    <select id="getBalanceByIdAndCurrency" resultType="com.example.bankingSolution.dto.BalanceDtoRequest">
+    <select id="getBalanceByIdAndCurrency" resultType="com.example.bankingSolution.dto.BalanceDto">
         SELECT
             b.balance_id AS id,
             b.amount AS amount,

@@ -13,7 +13,7 @@ public class TransactionDto {
     private String currency;
     private String direction;
     private String description;
-    private BalanceDto balance;
+    private BalanceDto balanceAfterTransaction;
 
     public void setAccountId(Long accountId) {
         if (accountId == null) {
@@ -50,7 +50,7 @@ public class TransactionDto {
         this.description = description;
     }
 
-    public TransactionDto(Long accountId, BigDecimal amount, String currency, String direction, String description, BalanceDto balance) {
+    public TransactionDto(Long accountId, BigDecimal amount, String currency, String direction, String description) {
         setAccountId(accountId);
         setAmount(amount);
         setCurrency(currency);
