@@ -1,6 +1,7 @@
 package com.example.bankingSolution.services;
 
 import com.example.bankingSolution.classifiers.DirectionEnum;
+import com.example.bankingSolution.dao.AccountDao;
 import com.example.bankingSolution.dao.BalanceDao;
 import com.example.bankingSolution.dao.TransactionDao;
 import com.example.bankingSolution.dto.AccountDto;
@@ -21,6 +22,7 @@ public class TransactionService {
     private final BalanceDao balanceDao;
     private final AccountService accountService;
     private final ValidatorService validatorService;
+    private final AccountDao accountDao;
 
     public TransactionDto createTransaction(TransactionDto transactionDto) throws ApplicationException {
         AccountDto account = accountService.getAccountById(transactionDto.getAccountId());
@@ -44,9 +46,9 @@ public class TransactionService {
     }
 
     public List<TransactionResponseDto> getAllTransactionsByAccountId(Long id) {
-        try{
+        if (accountDao.getAccountById(id).isPresent()) {  //check if account is present
             return transactionDao.getAllTransactionsByAccountId(id);
-        } catch (Exception e) {
+        } else {
             throw new ApplicationException("No account with ID: " + id);
         }
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public class AccountDtoRequest {
     private Long id;
     private Long customerId;
-    private Long countryId;
+    private String country;
     private List<String> currencies;
 
     public void setCustomerId(Long customerId) {
@@ -19,11 +19,11 @@ public class AccountDtoRequest {
         this.customerId = customerId;
     }
 
-    public void setCountryId(Long countryId) {
-        if (countryId == null) {
-            throw new ApplicationException("Country ID cannot be null.");
+        public void setCountry(String country) {
+        if (country == null) {
+            throw new ApplicationException("Country cannot be null.");
         }
-        this.countryId = countryId;
+        this.country = country;
     }
 
     public void setCurrencies(List<String> currencies) {
@@ -33,9 +33,9 @@ public class AccountDtoRequest {
         this.currencies = currencies;
     }
 
-    public AccountDtoRequest(Long customerId, Long countryId, List<String> currencies) {
+    public AccountDtoRequest(Long customerId, String country, List<String> currencies) {
         setCustomerId(customerId);
-        setCountryId(countryId);
+        setCountry(country);
         setCurrencies(currencies);
     }
 }

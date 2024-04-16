@@ -20,17 +20,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="2-Countries table" author="Jelizaveta Vološina">
-        <createTable tableName="countries">
-            <column name="country_id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="pk_countries"/>
-            </column>
-            <column name="country_name" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ak_country_name"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet  id="3-Account table"  author="Jelizaveta Vološina">
+    <changeSet  id="2-Account table"  author="Jelizaveta Vološina">
         <createTable  tableName="account">
             <column  name="account_id"  type="int"  autoIncrement="true">
                 <constraints  primaryKey="true" primaryKeyName="pk_account"  nullable="false"/>
@@ -38,7 +28,7 @@
             <column name="customer_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column  name="country_id"  type="int">
+            <column  name="country"  type="varchar(255)">
                 <constraints  nullable="false"/>i
             </column>
         </createTable>
@@ -49,15 +39,8 @@
                                  referencedColumnNames="customer_id"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"/>
-        <addForeignKeyConstraint constraintName="fk_account_country"
-                                 baseTableName="account"
-                                 baseColumnNames="country_id"
-                                 referencedTableName="countries"
-                                 referencedColumnNames="country_id"
-                                 onDelete="CASCADE"
-                                 onUpdate="CASCADE"/>
     </changeSet>
-    <changeSet  id="4-Balance table"  author="Jelizaveta Vološina">
+    <changeSet  id="3-Balance table"  author="Jelizaveta Vološina">
         <createTable  tableName="balances">
             <column  name="balance_id"  type="int"  autoIncrement="true">
                 <constraints  primaryKey="true" primaryKeyName="pk_balance"  nullable="false"/>
@@ -83,7 +66,7 @@
                              tableName="balances"
                              constraintName="ak_account_id_currency"/>
     </changeSet>
-    <changeSet  id="5-Transaction table"  author="Jelizaveta Vološina">
+    <changeSet  id="4-Transaction table"  author="Jelizaveta Vološina">
         <createTable  tableName="transactions">
             <column  name="transaction_id"  type="int"  autoIncrement="true">
                 <constraints  primaryKey="true" primaryKeyName="pk_transaction"  nullable="false"/>

@@ -1,5 +1,6 @@
 package com.example.bankingSolution.services;
 
+import com.example.bankingSolution.classifiers.CountryEnum;
 import com.example.bankingSolution.classifiers.CurrencyEnum;
 import com.example.bankingSolution.classifiers.DirectionEnum;
 import com.example.bankingSolution.exceptions.ApplicationException;
@@ -24,6 +25,14 @@ public class ValidatorService {
             DirectionEnum directionEnum = DirectionEnum.valueOf(direction.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new ApplicationException("Invalid direction: " + direction);
+        }
+    }
+
+    public void validateCountry(String country) throws ApplicationException {
+        try {
+            CountryEnum countryEnum = CountryEnum.valueOf(country.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ApplicationException("Invalid country: " + country);
         }
     }
 

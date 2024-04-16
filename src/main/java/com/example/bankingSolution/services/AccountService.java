@@ -24,6 +24,7 @@ public class AccountService {
     private final ValidatorService validatorService;
 
     public AccountDto createAccount(AccountDtoRequest account) throws ApplicationException {
+        validatorService.validateCountry(account.getCountry());
         for (String currencyStr : account.getCurrencies()) {
             validatorService.validateCurrency(currencyStr);
         }

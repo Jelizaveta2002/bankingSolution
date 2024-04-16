@@ -56,42 +56,4 @@
             <column name="customer_email" value="timo.t@gmail.com"/>
         </insert>
     </changeSet>
-    <changeSet  id="2-Country table insert data"  author="Jelizaveta Vološina">
-        <insert tableName="countries">
-            <column name="country_name" value="Estonia"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Germany"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="France"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Sweden"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="United Kingdom"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="United States"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Italy"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Spain"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Portugal"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Greece"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Scotland"/>
-        </insert>
-        <insert tableName="countries">
-            <column name="country_name" value="Wales"/>
-        </insert>
-    </changeSet>
 </databaseChangeLog>
