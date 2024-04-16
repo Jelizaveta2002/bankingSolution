@@ -5,4 +5,12 @@
         INSERT INTO account (customer_id, country_id)
         VALUES (#{customerId}, #{countryId});
     </insert>
+
+    <select id="getAccountById" resultType="com.example.bankingSolution.dto.AccountDto">
+        SELECT
+            a.account_id AS id,
+            a.customer_id AS customerId
+        FROM account a
+        WHERE a.account_id = #{id}
+    </select>
 </mapper>

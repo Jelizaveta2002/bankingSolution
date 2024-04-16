@@ -6,7 +6,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class BalanceDto {
+public class BalanceDtoRequest {
+    private Long id;
+    private Long accountId;
     private BigDecimal amount;
     private CurrencyEnum currency;
 }

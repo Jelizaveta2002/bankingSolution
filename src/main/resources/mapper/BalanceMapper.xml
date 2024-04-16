@@ -5,4 +5,12 @@
         INSERT INTO balances (account_id, amount, currency)
         VALUES (#{accountId}, #{amount}, #{currency});
     </insert>
+
+    <select id="getAllBalancesByAccountId" resultType="com.example.bankingSolution.dto.BalanceDto">
+        SELECT
+            b.amount AS amount,
+            b.currency AS currency
+        FROM balances b
+        WHERE b.account_id = #{id}
+    </select>
 </mapper>
