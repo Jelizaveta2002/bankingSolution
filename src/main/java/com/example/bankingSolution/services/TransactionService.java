@@ -9,7 +9,9 @@ import com.example.bankingSolution.dto.BalanceDto;
 import com.example.bankingSolution.dto.TransactionDto;
 import com.example.bankingSolution.dto.TransactionResponseDto;
 import com.example.bankingSolution.exceptions.ApplicationException;
+import com.example.bankingSolution.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class TransactionService {
     private final AccountService accountService;
     private final ValidatorService validatorService;
     private final AccountDao accountDao;
+    private final RabbitTemplate rabbitTemplate;
 
     public TransactionDto createTransaction(TransactionDto transactionDto) throws ApplicationException {
         AccountDto account = accountService.getAccountById(transactionDto.getAccountId());
@@ -39,6 +42,7 @@ public class TransactionService {
             BalanceDto transactionBalance = balanceDao.getBalanceByIdAndCurrency(transactionDto.getAccountId(), transactionDto.getCurrency());
             transactionDto.setBalanceAfterTransaction(transactionBalance);
             transactionDao.createTransaction(transactionDto);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.TRANSACTION_EXCHANGE_NAME, RabbitMQConfig.TRANSACTION_ROUTING_KEY, transactionDto);
             return transactionDto;
         } else {
             throw new ApplicationException("Account with ID " + transactionDto.getAccountId() + " does not have balance with currency " + transactionDto.getCurrency());
