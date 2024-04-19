@@ -3,6 +3,7 @@ package com.example.bankingSolution.services;
 import com.example.bankingSolution.classifiers.CountryEnum;
 import com.example.bankingSolution.classifiers.CurrencyEnum;
 import com.example.bankingSolution.classifiers.DirectionEnum;
+import com.example.bankingSolution.dao.CustomerDao;
 import com.example.bankingSolution.exceptions.ApplicationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 public class ValidatorService {
+
+    private final CustomerDao customerDao;
     public void validateCurrency(String currency) throws ApplicationException {
         try {
             CurrencyEnum currencyEnum = CurrencyEnum.valueOf(currency.toUpperCase());
@@ -46,5 +49,9 @@ public class ValidatorService {
         } catch (IllegalArgumentException e) {
             throw new ApplicationException("Unexpected problem occurred while transaction");
         }
+    }
+
+    public boolean validateCustomer(Long customerId) throws ApplicationException {
+        return customerDao.existsCustomerById(customerId);
     }
 }

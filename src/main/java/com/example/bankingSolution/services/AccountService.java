@@ -9,7 +9,6 @@ import com.example.bankingSolution.dto.BalanceDto;
 import com.example.bankingSolution.exceptions.ApplicationException;
 import com.example.bankingSolution.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,9 @@ public class AccountService {
     private final RabbitTemplate rabbitTemplate;
 
     public AccountDto createAccount(AccountDtoRequest accountDtoRequest) throws ApplicationException {
+        if (!validatorService.validateCustomer(accountDtoRequest.getCustomerId())) {
+            throw new ApplicationException("No customer with ID: " + accountDtoRequest.getCustomerId());
+        }
         validatorService.validateCountry(accountDtoRequest.getCountry());
         if (accountDtoRequest.getCurrencies().isEmpty()) {
             throw new ApplicationException("Account should have at least 1 currency.");

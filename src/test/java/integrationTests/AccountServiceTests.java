@@ -54,6 +54,16 @@ public class AccountServiceTests {
     }
 
     @Test
+    void testCreateAccountCustomerDoesNotExist() throws Exception {
+        String jsonRequest = "{\"customerId\":15,\"country\":\"IT\",\"currencies\":[\"EUR\"]}";
+        mockMvc.perform(post("/api/account/add")
+                        .contentType("application/json")
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("No customer with ID: 15"));
+    }
+
+    @Test
     void testCreateAccountInvalidCountry() throws Exception {
         String jsonRequest = "{\"customerId\":5,\"country\":\"OO\",\"currencies\":[\"EUR\"]}";
         mockMvc.perform(post("/api/account/add")

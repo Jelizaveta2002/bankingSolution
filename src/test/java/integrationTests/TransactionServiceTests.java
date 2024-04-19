@@ -93,7 +93,7 @@ public class TransactionServiceTests {
     }
 
     @Test
-    void testCreateTransaction() throws Exception {
+    void testCreateTransactionInsufficientFunds() throws Exception {
         String jsonRequest = "{\"accountId\": 1, \"amount\": 15, \"currency\": \"EUR\", \"direction\": \"OUT\", \"description\": \"Coffee\"}";
 
         mockMvc.perform(post("/api/transaction/add")
@@ -101,5 +101,16 @@ public class TransactionServiceTests {
                         .content(jsonRequest))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("Insufficient funds"));
+    }
+
+    @Test
+    void testCreateTransactionInvalidAmount() throws Exception {
+        String jsonRequest = "{\"accountId\": 1, \"amount\": -100, \"currency\": \"EUR\", \"direction\": \"IN\", \"description\": \"Present\"}";
+
+        mockMvc.perform(post("/api/transaction/add")
+                        .contentType("application/json")
+                        .content(jsonRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Invalid amount: -100"));
     }
 }
