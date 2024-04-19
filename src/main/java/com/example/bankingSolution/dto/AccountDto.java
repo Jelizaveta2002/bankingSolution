@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class AccountDto {
     private Long id;
-    private String customerId;
+    private Long customerId;
     private List<BalanceDto> balances;
 }

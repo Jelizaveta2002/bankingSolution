@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AccountService {
     private final AccountDao accountDao;
     private final BalanceDao balanceDao;
@@ -28,12 +27,15 @@ public class AccountService {
 
     public AccountDto createAccount(AccountDtoRequest accountDtoRequest) throws ApplicationException {
         validatorService.validateCountry(accountDtoRequest.getCountry());
-        for (String currencyStr : accountDtoRequest.getCurrencies()) {
-            validatorService.validateCurrency(currencyStr);
+        if (accountDtoRequest.getCurrencies().isEmpty()) {
+            throw new ApplicationException("Account should have at least 1 currency.");
+        } else {
+            for (String currencyStr : accountDtoRequest.getCurrencies()) {
+                validatorService.validateCurrency(currencyStr);
+            }
         }
         try {
             accountDao.createAccount(accountDtoRequest);
-            log.info(accountDtoRequest.getId().toString());
             for (String currency : accountDtoRequest.getCurrencies()) {
                 BalanceDto balanceDto = new BalanceDto();
                 balanceDto.setAccountId(accountDtoRequest.getId());
@@ -42,7 +44,7 @@ public class AccountService {
                 balanceDao.createBalance(balanceDto);
             }
             AccountDto account = getAccountById(accountDtoRequest.getId());
-            rabbitTemplate.convertAndSend(RabbitMQConfig.ACCOUNT_EXCHANGE_NAME, RabbitMQConfig.ACCOUNT_ROUTING_KEY, account);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.ACCOUNT_EXCHANGE_NAME, RabbitMQConfig.ACCOUNT_ROUTING_KEY, account); // messaged published to RabbitMQ
             return account;
         } catch (Exception e) {
             throw new ApplicationException("Unexpected error occurred while creating a new accountDtoRequest");
@@ -58,7 +60,7 @@ public class AccountService {
             return accountDto;
         }
         else {
-            throw new ApplicationException("No account with id " + id);
+            throw new ApplicationException("No account with ID: " + id);
         }
     }
 

@@ -42,7 +42,7 @@ public class TransactionService {
             BalanceDto transactionBalance = balanceDao.getBalanceByIdAndCurrency(transactionDto.getAccountId(), transactionDto.getCurrency());
             transactionDto.setBalanceAfterTransaction(transactionBalance);
             transactionDao.createTransaction(transactionDto);
-            rabbitTemplate.convertAndSend(RabbitMQConfig.TRANSACTION_EXCHANGE_NAME, RabbitMQConfig.TRANSACTION_ROUTING_KEY, transactionDto);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.TRANSACTION_EXCHANGE_NAME, RabbitMQConfig.TRANSACTION_ROUTING_KEY, transactionDto); // messaged published to RabbitMQ
             return transactionDto;
         } else {
             throw new ApplicationException("Account with ID " + transactionDto.getAccountId() + " does not have balance with currency " + transactionDto.getCurrency());
